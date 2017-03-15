@@ -2,10 +2,10 @@
   "kind": "Template",
   "apiVersion": "v1",
   "metadata": {
-    "name": "cakephp-mysql-persistent",
+    "name": "php-mysql-persistent-eshop",
     "annotations": {
-      "openshift.io/display-name": "CakePHP + MySQL (Persistent)",
-      "description": "An example CakePHP application with a MySQL database. For more information about using this template, including OpenShift considerations, see https://github.com/openshift/cakephp-ex/blob/master/README.md.",
+      "openshift.io/display-name": "php+mysql+持久存储项目",
+      "description": "一个带有MySQL数据库的CakePHP应用程序示例。 有关使用此模板的更多信息，包括OpenShift注意事项，请参阅https://github.com/openshift/cakephp-ex/blob/master/README.md。",
       "tags": "quickstart,php,cakephp",
       "iconClass": "icon-php",
       "template.openshift.io/long-description": "This template defines resources needed to develop a CakePHP application, including a build configuration, application deployment configuration, and database deployment configuration.",
@@ -128,9 +128,9 @@
             "type": "ConfigChange"
           },
           {
-            "type": "GitHub",
-            "github": {
-              "secret": "${GITHUB_WEBHOOK_SECRET}"
+            "type": "Generic",
+            "generic": {
+              "secret": "${GIT_WEBHOOK_SECRET}"
             }
           }
         ],
@@ -451,104 +451,104 @@
   "parameters": [
     {
       "name": "NAME",
-      "displayName": "Name",
-      "description": "The name assigned to all of the frontend objects defined in this template.",
+      "displayName": "名称",
+      "description": "分配给此模板中定义的所有前端对象的名称",
       "required": true,
       "value": "cakephp-mysql-persistent"
     },
     {
       "name": "NAMESPACE",
-      "displayName": "Namespace",
-      "description": "The OpenShift Namespace where the ImageStream resides.",
+      "displayName": "项目",
+      "description": "ImageStream所在的OpenShift项目",
       "required": true,
       "value": "openshift"
     },
     {
       "name": "MEMORY_LIMIT",
-      "displayName": "Memory Limit",
-      "description": "Maximum amount of memory the CakePHP container can use.",
+      "displayName": "PHP内存上限",
+      "description": "CakePHP容器可以使用的最大内存量。",
       "required": true,
       "value": "512Mi"
     },
     {
       "name": "MEMORY_MYSQL_LIMIT",
-      "displayName": "Memory Limit (MySQL)",
-      "description": "Maximum amount of memory the MySQL container can use.",
+      "displayName": " MySQL内存上限",
+      "description": "MySQL容器可以使用的最大内存量。",
       "required": true,
       "value": "512Mi"
     },
     {
       "name": "VOLUME_CAPACITY",
-      "displayName": "Volume Capacity",
-      "description": "Volume space available for data, e.g. 512Mi, 2Gi",
+      "displayName": "存储卷空间上限",
+      "description": "用于数据的卷空间，例如 512Mi，2Gi",
       "value": "1Gi",
       "required": true
     },
     {
       "name": "SOURCE_REPOSITORY_URL",
-      "displayName": "Git Repository URL",
-      "description": "The URL of the repository with your application source code.",
+      "displayName": "Git代码仓地址",
+      "description": "此应用的代码仓地址，便于自动构建",
       "required": true,
-      "value": "https://github.com/openshift/cakephp-ex.git"
+      "value": "http://git-eshop.192.168.31.49.xip.io/cackephp-ex.git"
     },
     {
       "name": "SOURCE_REPOSITORY_REF",
-      "displayName": "Git Reference",
-      "description": "Set this to a branch name, tag or other ref of your repository if you are not using the default branch."
+      "displayName": "Git 分支",
+      "description": "如果不使用默认分支，请将其设置为代码仓的分支名称，标记或其他引用。"
     },
     {
       "name": "CONTEXT_DIR",
-      "displayName": "Context Directory",
-      "description": "Set this to the relative path to your project if it is not in the root of your repository."
+      "displayName": "Context路径",
+      "description": "如果不在项目的根路径上，可设置其相对路径， 这个是用来判断项目所属哪种语言的"
     },
     {
       "name": "APPLICATION_DOMAIN",
-      "displayName": "Application Hostname",
-      "description": "The exposed hostname that will route to the CakePHP service, if left blank a value will be defaulted.",
+      "displayName": "应用被访问的域名",
+      "description": "路由到CakePHP服务的公开主机名，如果留空，将默认值。",
       "value": ""
     },
     {
-      "name": "GITHUB_WEBHOOK_SECRET",
-      "displayName": "GitHub Webhook Secret",
-      "description": "A secret string used to configure the GitHub webhook.",
+      "name": "GIT_WEBHOOK_SECRET",
+      "displayName": "Git Webhook 秘钥",
+      "description": "此秘钥是用于配置Git webhook.",
       "generate": "expression",
       "from": "[a-zA-Z0-9]{40}"
     },
     {
       "name": "DATABASE_SERVICE_NAME",
-      "displayName": "Database Service Name",
+      "displayName": "数据库服务名称",
       "required": true,
       "value": "mysql"
     },
     {
       "name": "DATABASE_ENGINE",
-      "displayName": "Database Engine",
-      "description": "Database engine: postgresql, mysql or sqlite (default).",
+      "displayName": "数据库引擎",
+      "description": "可选引擎: postgresql, mysql 或者 sqlite (默认).",
       "required": true,
       "value": "mysql"
     },
     {
       "name": "DATABASE_NAME",
-      "displayName": "Database Name",
+      "displayName": "数据库名称",
       "required": true,
       "value": "default"
     },
     {
       "name": "DATABASE_USER",
-      "displayName": "Database User",
+      "displayName": "数据库用户",
       "required": true,
       "value": "cakephp"
     },
     {
       "name": "DATABASE_PASSWORD",
-      "displayName": "Database Password",
+      "displayName": "数据库密码",
       "generate": "expression",
       "from": "[a-zA-Z0-9]{16}"
     },
     {
       "name": "CAKEPHP_SECRET_TOKEN",
-      "displayName": "CakePHP secret token",
-      "description": "Set this to a long random string.",
+      "displayName": "CakePHP秘钥token",
+      "description": "设置一个足够长的随机字符串吧.",
       "generate": "expression",
       "from": "[\\w]{50}"
     },
@@ -574,7 +574,7 @@
     },
     {
       "name": "COMPOSER_MIRROR",
-      "displayName": "Custom Composer Mirror URL",
+      "displayName": "自定义Composer Mirror地址",
       "description": "The custom Composer mirror URL",
       "value": ""
     }
